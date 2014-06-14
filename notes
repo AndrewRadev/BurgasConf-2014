@@ -1,7 +1,15 @@
 ## Code:
 
-- Cube on the floor
-- Lighting, materials
+- # Position cube at center of coordinate system, camera a bit back
+- FPS controls: pointerlock
+- FPS controls: mouse movement
+- FPS controls: wasd movement
+- FPS controls: jumping
+- # Many random cubes
+- # tiled floor
+- raycasting, hitting the cubes
+
+- Animation?
 
 ## Stuff to do:
 

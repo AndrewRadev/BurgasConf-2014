@@ -2,26 +2,22 @@ $(function() {
   $canvas = $('canvas');
 
   var scene    = new THREE.Scene();
-  var camera   = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+  var camera   = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 1000);
   var renderer = new THREE.WebGLRenderer({canvas: $canvas[0], antialias: true});
 
-  axisHelper = new THREE.AxisHelper(100);
-  scene.add(axisHelper);
+  // axisHelper = new THREE.AxisHelper(100);
+  // scene.add(axisHelper);
 
   scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
 
   renderer.setClearColor( 0xffffff );
   renderer.setSize(window.innerWidth, window.innerHeight);
 
-  var floor = addFloor(scene);
-  var cube = addCube(scene);
+  addFloor(scene);
+  addCubes(scene);
 
-  cube.position.set(0, 0, 0);
-
-  camera.position.x = 10;
-  camera.position.y = 10;
+  camera.position.y = 1.7;
   camera.position.z = 10;
-  camera.lookAt(cube.position);
 
   // var controls = new THREE.PointerLockControls(camera, renderer.domElement);
   // scene.add( controls.getObject() );
@@ -48,54 +44,66 @@ $(function() {
   render();
 });
 
-function addCube(scene) {
-  var geometry = new THREE.BoxGeometry(1, 1, 1);
-  // var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
-  var material = new THREE.MeshPhongMaterial({color: 0x00ff00});
-  var cube     = new THREE.Mesh(geometry, material);
+function addCubes(scene) {
+  var side = 3;
 
-  scene.add(cube);
-  return cube;
+  for (var i = 0; i < 20; i++) {
+    var geometry = new THREE.BoxGeometry(side, side, side);
+    var material = new THREE.MeshPhongMaterial({
+      color:    0x00ff00,
+      specular: 0x009900,
+      ambient:  0x111111,
+    });
+    var cube = new THREE.Mesh(geometry, material);
+
+    var randomX = -50 + Math.random()*100;
+    var randomZ = -50 + Math.random()*100;
+
+    cube.position.set(randomX, side / 2, randomZ);
+    cube.rotation.y = -Math.PI/2 + Math.random()*Math.PI
+
+    scene.add(cube);
+  }
 }
 
 function addFloor(scene) {
-  geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
+  var segments = 10;
+  var geometry = new THREE.PlaneGeometry( 100, 100, segments, segments );
   geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
 
-  for ( var i = 0, l = geometry.vertices.length; i < l; i ++ ) {
-    var vertex = geometry.vertices[ i ];
-    vertex.x += Math.random() * 20 - 10;
-    vertex.y += Math.random() * 2;
-    vertex.z += Math.random() * 20 - 10;
+  var materialEven = new THREE.MeshBasicMaterial({ color: 0xccccfc });
+  var materialOdd  = new THREE.MeshBasicMaterial({ color: 0x444464 });
+  var materials    = [materialEven, materialOdd];
+
+  for (var x = 0; x < segments; x++) {
+    for (var y = 0; y < segments; y++) {
+      i = x * segments + y
+      j = 2 * i
+
+      geometry.faces[j].materialIndex     = (x + y) % 2;
+      geometry.faces[j + 1].materialIndex = (x + y) % 2;
+    }
   }
 
-  for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
-    var face = geometry.faces[ i ];
-    face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-    face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-    face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-  }
-  material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
-  // material = new THREE.MeshBasicMaterial( { color: 'blue' } );
+  var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
 
-  mesh = new THREE.Mesh( geometry, material );
   mesh.position.y = 0;
-  // scene.add(debugPosition(mesh.position));
-
   scene.add( mesh );
-  return mesh;
 }
 
 function addLights(scene) {
+  // var light = new THREE.HemisphereLight(0x999999, 0x999999);
+  // scene.add(light);
+
   var light = new THREE.DirectionalLight( 0xffffff, 1.5 );
   light.position.set( 1, 1, -1 );
   scene.add( light );
-  scene.add( new THREE.DirectionalLightHelper(light, 1) );
+  // scene.add( new THREE.DirectionalLightHelper(light, 1) );
 
   var light = new THREE.DirectionalLight( 0xffffff, 0.75 );
   light.position.set( -1, -0.5, -1 );
   scene.add( light );
-  scene.add( new THREE.DirectionalLightHelper(light, 1) );
+  // scene.add( new THREE.DirectionalLightHelper(light, 1) );
 }
 
 // Debugging
