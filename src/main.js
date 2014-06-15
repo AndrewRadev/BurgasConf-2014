@@ -1,3 +1,37 @@
+var Controls = function(camera, el) {
+  var height = 1.7; // player height
+
+  $el = $(el);
+
+  camera.rotation.set(0, 0, 0);
+
+  var pitch = new THREE.Object3D();
+  pitch.add( camera );
+
+  var yaw = new THREE.Object3D();
+  yaw.position.y = height;
+  yaw.add( pitch );
+
+  $(el).pointerLock({
+    on: 'click',
+    fullscreenElement: el,
+    movement: function(movementX, movementY) {
+      updateCamera(movementX, movementY);
+    }
+  });
+
+  var updateCamera = function(movementX, movementY) {
+    yaw.rotation.y -= movementX * 0.002;
+    pitch.rotation.x -= movementY * 0.002;
+
+    pitch.rotation.x = Math.max(-Math.PI/2, Math.min(Math.PI/2, pitch.rotation.x));
+  };
+
+  this.getObject = function() {
+    return yaw;
+  };
+};
+
 $(function() {
   $canvas = $('canvas');
 
@@ -16,8 +50,8 @@ $(function() {
   addFloor(scene);
   addCubes(scene);
 
-  camera.position.y = 1.7;
-  camera.position.z = 10;
+  var controls = new Controls(camera, renderer.domElement);
+  scene.add(controls.getObject());
 
   // var controls = new THREE.PointerLockControls(camera, renderer.domElement);
   // scene.add( controls.getObject() );
