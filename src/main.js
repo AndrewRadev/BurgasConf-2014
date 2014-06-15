@@ -1,37 +1,3 @@
-var Controls = function(camera, el) {
-  var height = 1.7; // player height
-
-  $el = $(el);
-
-  camera.rotation.set(0, 0, 0);
-
-  var pitch = new THREE.Object3D();
-  pitch.add( camera );
-
-  var yaw = new THREE.Object3D();
-  yaw.position.y = height;
-  yaw.add( pitch );
-
-  $(el).pointerLock({
-    on: 'click',
-    fullscreenElement: el,
-    movement: function(movementX, movementY) {
-      updateCamera(movementX, movementY);
-    }
-  });
-
-  var updateCamera = function(movementX, movementY) {
-    yaw.rotation.y -= movementX * 0.002;
-    pitch.rotation.x -= movementY * 0.002;
-
-    pitch.rotation.x = Math.max(-Math.PI/2, Math.min(Math.PI/2, pitch.rotation.x));
-  };
-
-  this.getObject = function() {
-    return yaw;
-  };
-};
-
 $(function() {
   $canvas = $('canvas');
 
@@ -64,7 +30,7 @@ $(function() {
     // cube.rotation.x += 0.1;
     // cube.rotation.y += 0.1;
 
-    // controls.update();
+    controls.update();
     renderer.render(scene, camera);
   }
 
@@ -88,102 +54,102 @@ function addCubes(scene) {
       specular: 0x009900,
       ambient:  0x111111,
     });
-    var cube = new THREE.Mesh(geometry, material);
+      var cube = new THREE.Mesh(geometry, material);
 
-    var randomX = -50 + Math.random()*100;
-    var randomZ = -50 + Math.random()*100;
+      var randomX = -50 + Math.random()*100;
+      var randomZ = -50 + Math.random()*100;
 
-    cube.position.set(randomX, side / 2, randomZ);
-    cube.rotation.y = -Math.PI/2 + Math.random()*Math.PI
+      cube.position.set(randomX, side / 2, randomZ);
+      cube.rotation.y = -Math.PI/2 + Math.random()*Math.PI
 
-    scene.add(cube);
-  }
-}
-
-function addFloor(scene) {
-  var segments = 10;
-  var geometry = new THREE.PlaneGeometry( 100, 100, segments, segments );
-  geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
-
-  var materialEven = new THREE.MeshBasicMaterial({ color: 0xccccfc });
-  var materialOdd  = new THREE.MeshBasicMaterial({ color: 0x444464 });
-  var materials    = [materialEven, materialOdd];
-
-  for (var x = 0; x < segments; x++) {
-    for (var y = 0; y < segments; y++) {
-      i = x * segments + y
-      j = 2 * i
-
-      geometry.faces[j].materialIndex     = (x + y) % 2;
-      geometry.faces[j + 1].materialIndex = (x + y) % 2;
+      scene.add(cube);
     }
   }
 
-  var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+  function addFloor(scene) {
+    var segments = 10;
+    var geometry = new THREE.PlaneGeometry( 100, 100, segments, segments );
+    geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
 
-  mesh.position.y = 0;
-  scene.add( mesh );
-}
+    var materialEven = new THREE.MeshBasicMaterial({ color: 0xccccfc });
+    var materialOdd  = new THREE.MeshBasicMaterial({ color: 0x444464 });
+    var materials    = [materialEven, materialOdd];
 
-function addLights(scene) {
-  // var light = new THREE.HemisphereLight(0x999999, 0x999999);
-  // scene.add(light);
+    for (var x = 0; x < segments; x++) {
+      for (var y = 0; y < segments; y++) {
+        i = x * segments + y
+        j = 2 * i
 
-  var light = new THREE.DirectionalLight( 0xffffff, 1.5 );
-  light.position.set( 1, 1, -1 );
-  scene.add( light );
-  // scene.add( new THREE.DirectionalLightHelper(light, 1) );
+        geometry.faces[j].materialIndex     = (x + y) % 2;
+        geometry.faces[j + 1].materialIndex = (x + y) % 2;
+      }
+    }
 
-  var light = new THREE.DirectionalLight( 0xffffff, 0.75 );
-  light.position.set( -1, -0.5, -1 );
-  scene.add( light );
-  // scene.add( new THREE.DirectionalLightHelper(light, 1) );
-}
+    var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
 
-// Debugging
+    mesh.position.y = 0;
+    scene.add( mesh );
+  }
 
-function debugPosition(position) {
-  return debugSphere(1, position, 'red');
-}
+  function addLights(scene) {
+    // var light = new THREE.HemisphereLight(0x999999, 0x999999);
+    // scene.add(light);
 
-function debugBbox(mesh) {
-  mesh.geometry.computeBoundingBox();
+    var light = new THREE.DirectionalLight( 0xffffff, 1.5 );
+    light.position.set( 1, 1, -1 );
+    scene.add( light );
+    // scene.add( new THREE.DirectionalLightHelper(light, 1) );
 
-  var min = mesh.geometry.boundingBox.min;
-  var max = mesh.geometry.boundingBox.max;
+    var light = new THREE.DirectionalLight( 0xffffff, 0.75 );
+    light.position.set( -1, -0.5, -1 );
+    scene.add( light );
+    // scene.add( new THREE.DirectionalLightHelper(light, 1) );
+  }
 
-  console.log(min, max);
+  // Debugging
 
-  var geometry = new THREE.BoxGeometry(
-    Math.abs(max.x - min.x),
-    Math.abs(max.y - min.y),
-    Math.abs(max.z - min.z)
-  );
-  var material = new THREE.MeshLambertMaterial({
-    color: 'red',
-    transparent: true,
-    opacity: 0.5
-  });
-  var box = new THREE.Mesh(geometry, material);
-  box.position = mesh.position;
-  return box;
-}
+  function debugPosition(position) {
+    return debugSphere(1, position, 'red');
+  }
 
-function debugBsphere(mesh) {
-  mesh.geometry.computeBoundingSphere();
-  return debugSphere(mesh.geometry.boundingSphere.radius, mesh.position, 'red');
-}
+  function debugBbox(mesh) {
+    mesh.geometry.computeBoundingBox();
 
-// For debugging purposes
-function debugSphere(radius, position, color) {
-  var geometry, material, mesh;
-  geometry = new THREE.SphereGeometry(radius, 32, 32);
-  material = new THREE.MeshLambertMaterial({
-    color: color,
-    transparent: true,
-    opacity: 0.5
-  });
-  mesh = new THREE.Mesh(geometry, material);
-  mesh.position = position;
-  return mesh;
-};
+    var min = mesh.geometry.boundingBox.min;
+    var max = mesh.geometry.boundingBox.max;
+
+    console.log(min, max);
+
+    var geometry = new THREE.BoxGeometry(
+      Math.abs(max.x - min.x),
+      Math.abs(max.y - min.y),
+      Math.abs(max.z - min.z)
+    );
+    var material = new THREE.MeshLambertMaterial({
+      color: 'red',
+      transparent: true,
+      opacity: 0.5
+    });
+    var box = new THREE.Mesh(geometry, material);
+    box.position = mesh.position;
+    return box;
+  }
+
+  function debugBsphere(mesh) {
+    mesh.geometry.computeBoundingSphere();
+    return debugSphere(mesh.geometry.boundingSphere.radius, mesh.position, 'red');
+  }
+
+  // For debugging purposes
+  function debugSphere(radius, position, color) {
+    var geometry, material, mesh;
+    geometry = new THREE.SphereGeometry(radius, 32, 32);
+    material = new THREE.MeshLambertMaterial({
+      color: color,
+      transparent: true,
+      opacity: 0.5
+    });
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.position = position;
+    return mesh;
+  };
