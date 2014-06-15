@@ -4,7 +4,12 @@ window.Controls = function(camera, el) {
 
   // Speed of movement
   var speedCoefficient    = 200;
+  var jumpSpeed           = 50;
   var slowdownCoefficient = 5;
+
+  // Physics
+  var G    = 9.8;
+  var mass = 20;
 
   // Used for movement calculations;
   var velocity = new THREE.Vector3();
@@ -45,10 +50,9 @@ window.Controls = function(camera, el) {
       case 83: moveBackward = true; break; // s
       case 68: moveRight    = true; break; // d
 
-      // case 32: // space
-      //   if ( canJump === true ) velocity.y += 350;
-      //   canJump = false;
-      //   break;
+      case 32: // space
+        if (isOnFloor()) { velocity.y += jumpSpeed; }
+        break;
     }
   });
 
@@ -63,10 +67,14 @@ window.Controls = function(camera, el) {
 
   // Update camera position based on mouse movement
   var updateCamera = function(movementX, movementY) {
-    yaw.rotation.y -= movementX * 0.002;
+    yaw.rotation.y   -= movementX * 0.002;
     pitch.rotation.x -= movementY * 0.002;
 
     pitch.rotation.x = Math.max(-Math.PI/2, Math.min(Math.PI/2, pitch.rotation.x));
+  };
+
+  var isOnFloor = function() {
+    return (yaw.position.y <= 1.7);
   };
 
   this.getObject = function() {
@@ -81,6 +89,8 @@ window.Controls = function(camera, el) {
     velocity.x -= velocity.x * slowdownCoefficient * delta;
     velocity.z -= velocity.z * slowdownCoefficient * delta;
 
+    velocity.y -= mass * G * delta;
+
     if (moveForward)  { velocity.z -= speedCoefficient * delta; }
     if (moveBackward) { velocity.z += speedCoefficient * delta; }
 
@@ -88,7 +98,12 @@ window.Controls = function(camera, el) {
     if (moveRight) { velocity.x += speedCoefficient * delta; }
 
     yaw.translateX(velocity.x * delta);
-    // yaw.translateY(velocity.y * delta);
+    yaw.translateY(velocity.y * delta);
     yaw.translateZ(velocity.z * delta);
+
+    if (isOnFloor()) {
+      velocity.y = 0;
+      yaw.position.y = height;
+    }
   }
 };
