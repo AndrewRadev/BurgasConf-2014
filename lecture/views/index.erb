@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Main</title>
+
+    <script src="jquery-2.1.1.js" type="text/javascript"></script>
+    <script src="driver.js" type="text/javascript"></script>
+
+    <% i = 0 %>
+    <% loop do %>
+      <% if File.exists?("public/slides/slide_#{i}.js") %>
+
+        <script src="slides/slide_<%= i %>.js" type="text/javascript"></script>
+
+        <% i += 1 %>
+      <% else %>
+        <% break %>
+      <% end %>
+    <% end %>
+  </head>
+
+  <body>
+    <% i = 0 %>
+    <% loop do %>
+      <% if File.exists?("views/slides/_slide_#{i}.erb") %>
+
+        <div id="slide-<%= i %>" class="js-slide" data-id="<%= i %>" style="display: none">
+          <%= partial "slides/slide_#{i}" %>
+        </div>
+
+        <% i += 1 %>
+      <% else %>
+        <% break %>
+      <% end %>
+    <% end %>
+  </body>
+</html>
