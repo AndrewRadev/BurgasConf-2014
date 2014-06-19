@@ -14,7 +14,8 @@ $(function() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   addFloor(scene);
-  addCubes(scene);
+  //TODO don't make this global
+  window.cubes = addCubes(scene);
 
   var controls = new Controls(camera, renderer.domElement);
   scene.add(controls.getObject());
@@ -46,6 +47,7 @@ $(function() {
 
 function addCubes(scene) {
   var side = 3;
+  var cubes = [];
 
   for (var i = 0; i < 20; i++) {
     var geometry = new THREE.BoxGeometry(side, side, side);
@@ -63,8 +65,11 @@ function addCubes(scene) {
     cube.position.set(randomX, side / 2, randomZ);
     cube.rotation.y = -Math.PI/2 + Math.random()*Math.PI
 
+    cubes.push(cube);
     scene.add(cube);
   }
+
+  return cubes;
 }
 
 function addFloor(scene) {

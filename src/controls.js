@@ -19,6 +19,10 @@ window.Controls = function(camera, el) {
   var moveLeft     = null;
   var moveRight    = null;
 
+  // Shooting
+  var raycaster = new THREE.Raycaster();
+  var projector = new THREE.Projector();
+
   $el = $(el);
 
   camera.rotation.set(0, 0, 0);
@@ -37,6 +41,7 @@ window.Controls = function(camera, el) {
   // Listen to events
   $(el).pointerLock({
     on: 'click',
+    until: null,
     fullscreenElement: el,
     movement: function(movementX, movementY) {
       updateCamera(movementX, movementY);
@@ -62,6 +67,23 @@ window.Controls = function(camera, el) {
       case 65: moveLeft     = false; break; // a
       case 83: moveBackward = false; break; // s
       case 68: moveRight    = false; break; // d
+    }
+  });
+
+  $(document).on('click', function(e) {
+    var front = new THREE.Vector3(0, 0, 0.5);
+    projector.unprojectVector(front, camera);
+    raycaster.set(camera.position, front.sub(camera.position).normalize());
+
+    var intersections = raycaster.intersectObjects(window.cubes);
+    if (intersections.length) {
+      console.log(intersections[0].object)
+
+      intersections[0].object.material = new THREE.MeshPhongMaterial({
+        color:    0xff0000,
+        specular: 0xff0000,
+        ambient:  0x111111,
+      });
     }
   });
 
