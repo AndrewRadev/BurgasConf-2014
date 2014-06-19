@@ -2,7 +2,10 @@
   <head>
     <title>Main</title>
 
+    <link rel="stylesheet" href="application.css" type="text/css" media="screen" >
     <script src="jquery-2.1.1.js" type="text/javascript"></script>
+    <script src="jquery.color.js" type="text/javascript"></script>
+    <script src="lib.js" type="text/javascript"></script>
     <script src="driver.js" type="text/javascript"></script>
 
     <% i = 0 %>
@@ -23,7 +26,7 @@
     <% loop do %>
       <% if File.exists?("views/slides/_slide_#{i}.erb") %>
 
-        <div id="slide-<%= i %>" class="js-slide" data-id="<%= i %>" style="display: none">
+        <div id="slide-<%= i %>" class="slide" data-id="<%= i %>" style="display: none">
           <%= partial "slides/slide_#{i}" %>
         </div>
 

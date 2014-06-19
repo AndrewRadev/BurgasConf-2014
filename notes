@@ -1,15 +1,27 @@
 ## Code:
 
 - # Position cube at center of coordinate system, camera a bit back
-- FPS controls: pointerlock
-- FPS controls: mouse movement
-- FPS controls: wasd movement
-- FPS controls: jumping
+- # FPS controls: pointerlock
+- # FPS controls: mouse movement
+- # FPS controls: wasd movement
+- # FPS controls: jumping
 - # Many random cubes
 - # tiled floor
 - raycasting, hitting the cubes
 
 - Animation?
+
+## Presentation
+
+- # code highlighting
+- # bullets
+- # slide steps
+- # jump to particular page, with #anchor
+- 3d canvas
+  - Game
+  - Demo with mouse controls
+- # bullets -> appear
+- # instead of #hl-<id>, use .hl-<id>
 
 ## Stuff to do:
 

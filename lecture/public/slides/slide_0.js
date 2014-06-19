@@ -1,11 +1,14 @@
 Slides[0] = {
   init: function($el) {
-    $el.dump();
-    console.log('init slide 0');
   },
 
+  steps: [
+    function($el) { $el.highlight('0'); },
+    function($el) { $el.highlight('1'); },
+    function($el) { $el.highlight('2'); }
+  ],
+
   run: function($el) {
-    $el.dump();
-    console.log('run slide 0');
+    $el.highlight();
   }
 };

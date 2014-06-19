@@ -1,20 +1,16 @@
 window.Slides = [];
 
-$.fn.dump = function() {
-  $this = $(this)
-  console.log($this);
-  return $this;
-};
-
 $(function() {
   var $slides        = null;
   var slideIndex     = null;
   var $currentSlide  = null;
   var $previousSlide = null;
 
+  var currentSlideStep = 0;
+
   var animationDuration = 100;
 
-  function previousSlide() {
+  function back() {
     if (slideIndex <= 0) {
       // first slide
       return;
@@ -25,11 +21,18 @@ $(function() {
         slideIndex -= 1;
         $currentSlide = $previousSlide;
         if (Slides[slideIndex]) { Slides[slideIndex].run($currentSlide); }
+        window.location.hash = 'slide' + slideIndex;
       });
     });
   }
 
-  function nextSlide() {
+  function forward() {
+    if (Slides[slideIndex].steps && currentSlideStep < Slides[slideIndex].steps.length) {
+      Slides[slideIndex].steps[currentSlideStep]($currentSlide);
+      currentSlideStep += 1;
+      return;
+    }
+
     if (!$slides[slideIndex + 1]) {
       // no more slides
       return;
@@ -41,16 +44,26 @@ $(function() {
 
     $previousSlide.fadeOut(animationDuration, function() {
       $currentSlide.fadeIn(animationDuration);
-      if (Slides[slideIndex]) { Slides[slideIndex].run($currentSlide); }
+      if (Slides[slideIndex]) {
+        currentSlideStep = 0;
+        Slides[slideIndex].run($currentSlide);
+        window.location.hash = 'slide' + slideIndex;
+      }
     });
   }
 
-  $slides = $('.js-slide');
+  $slides = $('.slide');
 
   // Initial state
-  slideIndex = 0;
-  $currentSlide = $($slides[0]);
+  slideIndex = parseInt(window.location.hash.replace('#slide', ''));
+  console.log(window.location.hash);
+  console.log(slideIndex);
+  $currentSlide = $($slides[slideIndex]);
   $currentSlide.show();
+
+  if (slideIndex > 0) {
+    $previousSlide = $($slides[slideIndex - 1]);
+  }
 
   // Call init javascripts
   for (var i = 0; i < $slides.length; i++) {
@@ -61,8 +74,8 @@ $(function() {
 
   // Slide navigation
   $(document).on('keyup', function(e) {
-    if (e.keyCode == 32) { nextSlide(); }     // space
-    if (e.keyCode == 39) { nextSlide(); }     // right
-    if (e.keyCode == 37) { previousSlide(); } // left
+    if (e.keyCode == 32) { forward(); } // space
+    if (e.keyCode == 39) { forward(); } // right
+    if (e.keyCode == 37) { back(); }    // left
   });
 });
