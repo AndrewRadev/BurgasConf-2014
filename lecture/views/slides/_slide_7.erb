@@ -1,0 +1,16 @@
+<%# TODO FOV? %>
+
+<div class="code">
+  var $canvas = $('canvas');
+
+  <span class="hl-0">var scene = new THREE.Scene();</span>
+  <span class="hl-1">var camera = new THREE.PerspectiveCamera(
+    <span class="hl-2">55</span>,
+    <span class="hl-3">$canvas.innerWidth() / $canvas.innerHeight()</span>,
+    <span class="hl-4">1, 1000</span>
+  );</span>
+  <span class="hl-5">var renderer = new THREE.WebGLRenderer({
+    canvas: $canvas[0],
+    antialias: true
+  });</span>
+</div>

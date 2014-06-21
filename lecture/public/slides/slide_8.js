@@ -1,4 +1,4 @@
-Slides[0] = {
+Slides[8] = {
   init: function($el) {
   },
 
@@ -9,6 +9,5 @@ Slides[0] = {
   ],
 
   run: function($el) {
-    $el.highlight();
   }
 };

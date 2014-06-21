@@ -2,7 +2,7 @@ $(function() {
   $canvas = $('canvas');
 
   var scene    = new THREE.Scene();
-  var camera   = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 1000);
+  var camera   = new THREE.PerspectiveCamera(55, $canvas.innerWidth() / $canvas.innerHeight(), 1, 1000);
   var renderer = new THREE.WebGLRenderer({canvas: $canvas[0], antialias: true});
 
   // axisHelper = new THREE.AxisHelper(100);

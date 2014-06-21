@@ -1,5 +1,9 @@
 window.Slides = [];
 
+window.render = function() {
+  requestAnimationFrame(render);
+}
+
 $(function() {
   var $slides        = null;
   var slideIndex     = null;
@@ -27,7 +31,7 @@ $(function() {
   }
 
   function forward() {
-    if (Slides[slideIndex].steps && currentSlideStep < Slides[slideIndex].steps.length) {
+    if (Slides[slideIndex] && Slides[slideIndex].steps && currentSlideStep < Slides[slideIndex].steps.length) {
       Slides[slideIndex].steps[currentSlideStep]($currentSlide);
       currentSlideStep += 1;
       return;
@@ -47,15 +51,15 @@ $(function() {
       if (Slides[slideIndex]) {
         currentSlideStep = 0;
         Slides[slideIndex].run($currentSlide);
-        window.location.hash = 'slide' + slideIndex;
       }
+      window.location.hash = 'slide' + slideIndex;
     });
   }
 
   $slides = $('.slide');
 
   // Initial state
-  slideIndex = parseInt(window.location.hash.replace('#slide', ''));
+  slideIndex = parseInt(window.location.hash.replace('#slide', '')) || 0;
   console.log(window.location.hash);
   console.log(slideIndex);
   $currentSlide = $($slides[slideIndex]);
@@ -72,10 +76,24 @@ $(function() {
     }
   }
 
+  // Call first slide's run
+  if (Slides[slideIndex]) {
+    Slides[slideIndex].run($currentSlide);
+  }
+
+  // Start 3d rendering
+  render();
+
   // Slide navigation
+  $(document).on('keydown', function(e) {
+    if (e.keyCode == 32) { e.preventDefault(); } // space
+    if (e.keyCode == 39) { e.preventDefault(); } // right
+    if (e.keyCode == 37) { e.preventDefault(); } // left
+  });
+
   $(document).on('keyup', function(e) {
-    if (e.keyCode == 32) { forward(); } // space
-    if (e.keyCode == 39) { forward(); } // right
-    if (e.keyCode == 37) { back(); }    // left
+    if (e.keyCode == 32) { e.preventDefault(); forward(); } // space
+    if (e.keyCode == 39) { e.preventDefault(); forward(); } // right
+    if (e.keyCode == 37) { e.preventDefault(); back(); }    // left
   });
 });
