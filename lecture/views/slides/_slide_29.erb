@@ -1,0 +1,14 @@
+<div class="viewer full">
+  <h2>Movement</h2>
+
+  <div class="code">
+    $(document).on('keyup', function(e) {
+      switch (e.keyCode) {
+        case 87: moveForward  = false; break; // w
+        case 65: moveLeft     = false; break; // a
+        case 83: moveBackward = false; break; // s
+        case 68: moveRight    = false; break; // d
+      }
+    });
+  </div>
+</div>

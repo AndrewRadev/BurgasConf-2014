@@ -86,14 +86,12 @@ $(function() {
 
   // Slide navigation
   $(document).on('keydown', function(e) {
-    if (e.keyCode == 32) { e.preventDefault(); } // space
-    if (e.keyCode == 39) { e.preventDefault(); } // right
-    if (e.keyCode == 37) { e.preventDefault(); } // left
+    if (e.keyCode == 39) { return false; } // right
+    if (e.keyCode == 37) { return false; } // left
   });
 
   $(document).on('keyup', function(e) {
-    if (e.keyCode == 32) { e.preventDefault(); forward(); } // space
-    if (e.keyCode == 39) { e.preventDefault(); forward(); } // right
-    if (e.keyCode == 37) { e.preventDefault(); back(); }    // left
+    if (e.keyCode == 39) { forward(); return false; } // right
+    if (e.keyCode == 37) { back(); return false; }    // left
   });
 });
