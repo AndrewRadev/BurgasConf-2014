@@ -1,72 +1,8 @@
-## Code:
+## Cleanup
 
-- # Position cube at center of coordinate system, camera a bit back
-- # FPS controls: pointerlock
-- # FPS controls: mouse movement
-- # FPS controls: wasd movement
-- # FPS controls: jumping
-- # Many random cubes
-- # tiled floor
-- raycasting, hitting the cubes
-
-- Animation?
-
-## Presentation
-
-- # code highlighting
-- # bullets
-- # slide steps
-- # jump to particular page, with #anchor
-- 3d canvas
-  - Game
-  - Demo with mouse controls
-- # bullets -> appear
-- # instead of #hl-<id>, use .hl-<id>
-
-## Stuff to do:
-
-- Live coding environment
-- Skybox + Terrain + Walking + Shooting == Game
-
-## Talk
-
-- Basic components:
-  - Camera
-    - Ortho
-    - Perspective
-  - Scene
-
-  - Mesh
-    - Geometry
-    - Material
-      - Normal
-      - Phong
-      - Lambert
-
-  - Loader
-  - Lights
-    - Phong lighting model, hacks
-    - Raytracing
-
-  - Floor
-
-- Fun:
-  - Moving around with orbit controls
-  - Skybox
-  - Walking around in a landscape of random stuff
-  - Weapon, shoot things
-  - Explode things into red blood pixels
-  - Explode things into red hearts
-
-- Usage:
-  - Fun game
-    - Minecraft
-    - Lightspeed
-    - Superhot: https://www.kickstarter.com/projects/375798653/superhot
-    - Basketball?
-    - Baseball?
-  - Knowable 3d Viewer
-  - Google maps? Skybox with area around you? (Take 6 photos, combine them)
-  - Kinect, leap motion?
-  - 3d glasses
-  - Cool for kids
+- Remove manual "appear" calls, figure it out from the html
+- Remove manual "highlight" calls, figure it out from the html
+- Isolate examples, refer to them
+- new Slide(<%= index %>)
+- remove empty slides in the beginning
+- number slides with 00N

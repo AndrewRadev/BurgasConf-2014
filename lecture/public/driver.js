@@ -1,4 +1,5 @@
 window.Slides = [];
+window.Demos = {};
 
 window.render = function() {
   requestAnimationFrame(render);
