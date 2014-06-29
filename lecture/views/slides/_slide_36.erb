@@ -1,0 +1,20 @@
+<div class="viewer full">
+  <h2>Скачане</h2>
+
+  <div class="code">
+    this.update = function() {
+      <span class="hl-0">var G    = 9.8;
+      var mass = 20;
+      velocity.y -= mass * G * delta;</span>
+
+      yaw.translateX(velocity.x * delta);
+      <span class="hl-1">yaw.translateY(velocity.y * delta);</span>
+      yaw.translateZ(velocity.z * delta);
+
+      <span class="hl-2">if (isOnFloor()) {
+        velocity.y = 0;
+        yaw.position.y = height;
+      }</span>
+    };
+  </div>
+</div>

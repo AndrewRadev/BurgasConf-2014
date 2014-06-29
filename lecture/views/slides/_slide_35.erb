@@ -1,0 +1,17 @@
+<div class="viewer full">
+  <h2>Скачане</h2>
+
+  <div class="code">
+    <span class="hl-0">var isOnFloor = function() {
+      return (yaw.position.y &lt;= height);
+    };</span>
+
+    $(document).on('keydown', function(e) {
+      switch (e.keyCode) {
+        <span class="hl-1">case 32: // space
+          if (isOnFloor()) { velocity.y += jumpSpeed; }
+          break;</span>
+      }
+    });
+  </div>
+</div>
