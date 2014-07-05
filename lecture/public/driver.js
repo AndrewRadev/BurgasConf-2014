@@ -50,6 +50,20 @@ $(function() {
     $previousSlide.fadeOut(animationDuration, function() {
       $currentSlide.fadeIn(animationDuration);
 
+      if (!Slides[slideIndex] && $currentSlide.find('.appear').length) {
+        // we have things that will show up one at a time
+        Slides[slideIndex] = {
+          steps: [],
+        };
+        $currentSlide.find('.appear').each(function(i) {
+          (function(i) {
+            Slides[slideIndex].steps.push(function($el) {
+              $el.appear(i);
+            });
+          })(i);
+        });
+      }
+
       if (!Slides[slideIndex] && $currentSlide.find('.hl-0').length) {
         // we have steps to highlight
         Slides[slideIndex] = {
