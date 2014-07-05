@@ -31,7 +31,7 @@
       <% if File.exists?("views/slides/_slide_#{i}.erb") %>
 
         <div id="slide-<%= i %>" class="slide" data-id="<%= i %>" style="display: none">
-          <%= partial "slides/slide_#{i}" %>
+          <%= partial "slides/slide_#{i}", index: i %>
         </div>
 
         <% i += 1 %>

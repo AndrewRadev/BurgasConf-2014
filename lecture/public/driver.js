@@ -25,7 +25,7 @@ $(function() {
       $previousSlide.fadeIn(animationDuration, function() {
         slideIndex -= 1;
         $currentSlide = $previousSlide;
-        if (Slides[slideIndex]) { Slides[slideIndex].run($currentSlide); }
+        if (Slides[slideIndex] && Slides[slideIndex].run) { Slides[slideIndex].run($currentSlide); }
         window.location.hash = 'slide' + slideIndex;
       });
     });
@@ -51,7 +51,9 @@ $(function() {
       $currentSlide.fadeIn(animationDuration);
       if (Slides[slideIndex]) {
         currentSlideStep = 0;
-        Slides[slideIndex].run($currentSlide);
+        if (Slides[slideIndex].run) {
+          Slides[slideIndex].run($currentSlide);
+        }
       }
       window.location.hash = 'slide' + slideIndex;
     });
@@ -72,13 +74,13 @@ $(function() {
 
   // Call init javascripts
   for (var i = 0; i < $slides.length; i++) {
-    if (Slides[i]) {
+    if (Slides[i] && Slides[i].init) {
       Slides[i].init($($slides[i]));
     }
   }
 
   // Call first slide's run
-  if (Slides[slideIndex]) {
+  if (Slides[slideIndex] && Slides[slideIndex].run) {
     Slides[slideIndex].run($currentSlide);
   }
 

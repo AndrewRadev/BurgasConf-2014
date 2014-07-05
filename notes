@@ -2,7 +2,7 @@
 
 - Remove manual "appear" calls, figure it out from the html
 - Remove manual "highlight" calls, figure it out from the html
-- Isolate examples, refer to them
 - new Slide(<%= index %>)
 - remove empty slides in the beginning
 - number slides with 00N
+- fix bugs with sliding back and forth
