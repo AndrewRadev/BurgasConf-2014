@@ -19,10 +19,6 @@
     <% Dir["public/demos/*.js"].each do |file| %>
       <script src="<%= file.gsub('public', '') %>" type="text/javascript"></script>
     <% end %>
-
-    <% Dir["public/slides/slide_*.js"].each do |file| %>
-      <script src="<%= file.gsub('public', '') %>" type="text/javascript"></script>
-    <% end %>
   </head>
 
   <body>
