@@ -49,12 +49,37 @@ $(function() {
 
     $previousSlide.fadeOut(animationDuration, function() {
       $currentSlide.fadeIn(animationDuration);
+
+      if (!Slides[slideIndex] && $currentSlide.find('.hl-0').length) {
+        // we have steps to highlight
+        Slides[slideIndex] = {
+          steps: [],
+        };
+        var hlMaxIndex = 0;
+        $currentSlide.find('span[class^="hl-"]').each(function(i, el) {
+          hlIndex = parseInt($(el).attr('class').replace('hl-', ''));
+          if (hlIndex > hlMaxIndex) {
+            hlMaxIndex = hlIndex
+          }
+        });
+
+        for (var i = 0; i <= hlMaxIndex; i++) {
+          (function(i) {
+            Slides[slideIndex].steps.push(function($el) {
+              $el.highlight(i.toString());
+            });
+          })(i);
+        }
+      }
+
       if (Slides[slideIndex]) {
         currentSlideStep = 0;
+
         if (Slides[slideIndex].run) {
           Slides[slideIndex].run($currentSlide);
         }
       }
+
       window.location.hash = 'slide' + slideIndex;
     });
   }
@@ -63,8 +88,6 @@ $(function() {
 
   // Initial state
   slideIndex = parseInt(window.location.hash.replace('#slide', '')) || 0;
-  console.log(window.location.hash);
-  console.log(slideIndex);
   $currentSlide = $($slides[slideIndex]);
   $currentSlide.show();
 
