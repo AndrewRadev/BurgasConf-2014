@@ -1,8 +1,5 @@
 ## Cleanup
 
-- Remove manual "appear" calls, figure it out from the html
-- Remove manual "highlight" calls, figure it out from the html
-- new Slide(<%= index %>)
 - remove empty slides in the beginning
 - number slides with 00N
 - fix bugs with sliding back and forth
