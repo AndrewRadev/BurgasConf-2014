@@ -22,18 +22,13 @@
   </head>
 
   <body>
-    <% i = 0 %>
-    <% loop do %>
-      <% if File.exists?("views/slides/_slide_#{i}.erb") %>
+    <% Dir["views/slides/_slide_*.erb"].sort.each do |file| %>
+      <% i = file.gsub(/.*_slide_0*(\d+).erb$/, '\1').to_i %>
 
-        <div id="slide-<%= i %>" class="slide" data-id="<%= i %>" style="display: none">
-          <%= partial "slides/slide_#{i}", index: i %>
-        </div>
-
-        <% i += 1 %>
-      <% else %>
-        <% break %>
-      <% end %>
+      <div id="slide-<%= i %>" class="slide" data-id="<%= i %>" style="display: none">
+        <% partial_name = sprintf("slides/slide_%03d", i) %>
+        <%= partial partial_name, index: i %>
+      </div>
     <% end %>
   </body>
 </html>
