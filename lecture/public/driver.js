@@ -24,7 +24,9 @@ $(function() {
     $currentSlide.fadeOut(animationDuration, function() {
       $previousSlide.fadeIn(animationDuration, function() {
         slideIndex -= 1;
-        $currentSlide = $previousSlide;
+        $currentSlide = $($slides[slideIndex]);
+        $previousSlide = $($slides[slideIndex - 1]);
+        currentSlideStep = 0;
         if (Slides[slideIndex] && Slides[slideIndex].run) { Slides[slideIndex].run($currentSlide); }
         window.location.hash = 'slide' + slideIndex;
       });

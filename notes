@@ -1,5 +1,3 @@
 ## Cleanup
 
-- remove empty slides in the beginning
-- number slides with 00N
-- fix bugs with sliding back and forth
+- fix bug with quick arrows, queue up the callbacks
