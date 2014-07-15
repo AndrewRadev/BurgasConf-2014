@@ -12,6 +12,7 @@ $(function() {
   var $previousSlide = null;
 
   var currentSlideStep = 0;
+  var animating = false;
 
   var animationDuration = 100;
 
@@ -21,8 +22,10 @@ $(function() {
       return;
     }
 
+    animating = true;
     $currentSlide.fadeOut(animationDuration, function() {
       $previousSlide.fadeIn(animationDuration, function() {
+        animating = false;
         slideIndex -= 1;
         $currentSlide = $($slides[slideIndex]);
         $previousSlide = $($slides[slideIndex - 1]);
@@ -49,8 +52,11 @@ $(function() {
     slideIndex += 1;
     $currentSlide = $($slides[slideIndex]);
 
+    animating = true;
     $previousSlide.fadeOut(animationDuration, function() {
-      $currentSlide.fadeIn(animationDuration);
+      $currentSlide.fadeIn(animationDuration, function() {
+        animating = false;
+      });
 
       if (!Slides[slideIndex] && $currentSlide.find('.appear').length) {
         // we have things that will show up one at a time
@@ -133,7 +139,7 @@ $(function() {
   });
 
   $(document).on('keyup', function(e) {
-    if (e.keyCode == 39) { forward(); return false; } // right
-    if (e.keyCode == 37) { back(); return false; }    // left
+    if (e.keyCode == 39) { if (!animating) { forward(); }; return false; } // right
+    if (e.keyCode == 37) { if (!animating) { back(); };    return false; } // left
   });
 });
