@@ -1,0 +1,693 @@
+
+<!-- saved from url=(0029)http://localhost:9292/#slide0 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Main</title>
+
+    <link rel="stylesheet" href="./index_files/application.css" type="text/css" media="screen">
+
+    <script src="./index_files/jquery-2.1.1.js" type="text/javascript"></script>
+    <script src="./index_files/jquery.color.js" type="text/javascript"></script>
+    <script src="./index_files/jquery.pointerlock.js" type="text/javascript"></script>
+    <script src="./index_files/three.js" type="text/javascript"></script>
+    <script src="./index_files/OrbitControls.js" type="text/javascript"></script>
+    <script src="./index_files/controls.js" type="text/javascript"></script>
+    <script src="./index_files/controls_broken.js" type="text/javascript"></script>
+
+    <script src="./index_files/lib.js" type="text/javascript"></script>
+    <script src="./index_files/lib.js" type="text/javascript"></script>
+    <script src="./index_files/driver.js" type="text/javascript"></script>
+
+    
+      <script src="./index_files/01_flat_cube.js" type="text/javascript"></script>
+    
+      <script src="./index_files/03_interactive_cube.js" type="text/javascript"></script>
+    
+      <script src="./index_files/02_rotated_cube.js" type="text/javascript"></script>
+    
+      <script src="./index_files/05_full_scene_broken.js" type="text/javascript"></script>
+    
+      <script src="./index_files/04_random_cubes.js" type="text/javascript"></script>
+    
+      <script src="./index_files/07_interactive_flat_cube.js" type="text/javascript"></script>
+    
+      <script src="./index_files/06_full_scene.js" type="text/javascript"></script>
+    
+  </head><style type="text/css">embed[type*="application/x-shockwave-flash"],embed[src*=".swf"],object[type*="application/x-shockwave-flash"],object[codetype*="application/x-shockwave-flash"],object[src*=".swf"],object[codebase*="swflash.cab"],object[classid*="D27CDB6E-AE6D-11cf-96B8-444553540000"],object[classid*="d27cdb6e-ae6d-11cf-96b8-444553540000"],object[classid*="D27CDB6E-AE6D-11cf-96B8-444553540000"]{	display: none !important;}</style>
+
+  <body style="zoom: 1;">
+    
+      
+
+      <div id="slide-0" class="slide" data-id="0" style="">
+        
+        <div id="hello" class="full">
+  <img src="./index_files/me.jpg">
+
+  <ul>
+    <li>Github: <a href="http://github.com/AndrewRadev">AndrewRadev</a></li>
+    <li>Twitter: @<a href="http://twitter.com/andrewradev">AndrewRadev</a></li>
+  </ul>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-1" class="slide" data-id="1" style="display: none">
+        
+        <h1>3d Програмиране с three.js</h1>
+
+      </div>
+    
+      
+
+      <div id="slide-2" class="slide" data-id="2" style="display: none">
+        
+        <div class="code highlight">
+  &lt;html&gt;
+
+    &lt;head&gt;
+      &lt;script src="jquery-2.1.1.js"&gt;&lt;/script&gt;
+      &lt;script src="three.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+
+    &lt;body&gt;
+      <span class="hl-1">&lt;canvas&gt;
+      &lt;/canvas&gt;</span>
+    &lt;/body&gt;
+  &lt;/html&gt;
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-3" class="slide" data-id="3" style="display: none">
+        
+        <div class="code">
+  var $canvas = $('canvas');
+
+  <span class="hl-0">var scene = new THREE.Scene();</span>
+  <span class="hl-1">var camera = new THREE.PerspectiveCamera(
+    <span class="hl-2">55</span>,
+    <span class="hl-3">$canvas.innerWidth() / $canvas.innerHeight()</span>,
+    <span class="hl-4">1, 1000</span>
+  );</span>
+  <span class="hl-5">var renderer = new THREE.WebGLRenderer({
+    canvas: $canvas[0],
+    antialias: true
+  });</span>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-4" class="slide" data-id="4" style="display: none">
+        
+        <div class="code">
+  <span class="hl-0">renderer.setClearColor(0xffffff);
+  renderer.setSize($canvas.innerWidth(), $canvas.innerHeight());</span>
+
+  function <span class="hl-1">render</span>() {
+    requestAnimationFrame(<span class="hl-1">render</span>);
+    <span class="hl-2">renderer.render(scene, camera);</span>
+  }
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-5" class="slide" data-id="5" style="display: none">
+        
+        <div class="code">
+  <span class="hl-0">var geometry = new THREE.BoxGeometry(1, 1, 1);</span>
+  <span class="hl-1">var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });</span>
+
+  <span class="hl-2">var cube = new THREE.Mesh(geometry, material);</span>
+  <span class="hl-3">scene.add(cube);</span>
+
+  <span class="hl-4">camera.position.z = 5;</span>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-6" class="slide" data-id="6" style="display: none">
+        
+        <script>
+  Slides[6] = { run: Demos.flat_cube };
+</script>
+
+<div class="viewer full">
+  <canvas>
+  </canvas>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-7" class="slide" data-id="7" style="display: none">
+        
+        <div class="code">
+  cube.rotation.x = 0.3;
+  cube.rotation.y = 0.3;
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-8" class="slide" data-id="8" style="display: none">
+        
+        <script>
+  Slides[8] = { run: Demos.rotated_cube };
+</script>
+
+<div class="viewer full">
+  <canvas>
+  </canvas>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-9" class="slide" data-id="9" style="display: none">
+        
+        <h1>Светлини и материали</h1>
+
+      </div>
+    
+      
+
+      <div id="slide-10" class="slide" data-id="10" style="display: none">
+        
+        <script>
+  Slides[10] = { run: Demos.interactive_cube };
+</script>
+
+<div class="viewer full">
+  <canvas>
+  </canvas>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-11" class="slide" data-id="11" style="display: none">
+        
+        <div class="full">
+  <h2>Phong модел</h2>
+
+  <center><img src="./index_files/phong.png"></center>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-12" class="slide" data-id="12" style="display: none">
+        
+        <div class="full">
+  <h2>Phong модел</h2>
+
+  <div class="code">
+    var material = new <span class="hl-0">THREE.MeshPhongMaterial</span>({
+      <span class="hl-1">color:     0x00ff00,</span>
+      <span class="hl-2">specular:  0x009900,</span>
+      <span class="hl-3">ambient:   0x005500</span>
+    });
+
+    var light = new <span class="hl-4">THREE.HemisphereLight(
+      0xaaaaaa, 0x999999
+    );</span>
+    <span class="hl-5">scene.add(light);</span>
+  </div>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-13" class="slide" data-id="13" style="display: none">
+        
+        <script>
+  Slides[13] = { run: Demos.interactive_cube };
+</script>
+
+<div class="viewer full">
+  <canvas>
+  </canvas>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-14" class="slide" data-id="14" style="display: none">
+        
+        <script type="text/javascript">
+  Slides[14] = { run: Demos.random_cubes };
+</script>
+
+<div class="viewer full">
+  <canvas>
+  </canvas>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-15" class="slide" data-id="15" style="display: none">
+        
+        <div class="full">
+  <h2>Координатна система</h2>
+
+  <center><img src="./index_files/coordinate_system.png"></center>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-16" class="slide" data-id="16" style="display: none">
+        
+        <script>
+  Slides[16] = { run: Demos.interactive_flat_cube };
+</script>
+
+<div class="viewer full">
+  <canvas>
+  </canvas>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-17" class="slide" data-id="17" style="display: none">
+        
+        <script>
+  Slides[17] = { run: Demos.full_scene };
+</script>
+
+<div class="viewer full">
+  <canvas>
+  </canvas>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-18" class="slide" data-id="18" style="display: none">
+        
+        <div class="viewer full">
+  <h2>Оглеждане</h2>
+
+  <div class="code">
+    window.FPSControls = function(camera, el) {
+      <span class="hl-0">// jquery.pointerlock.js</span>
+      $(el).pointerLock({
+        <span class="hl-1">on: 'click',</span>
+        until: null,
+        fullscreenElement: el,
+        movement: function(movementX, movementY) {
+          <span class="hl-2">updateCamera(movementX, movementY);</span>
+        }
+      });
+    };
+  </div>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-19" class="slide" data-id="19" style="display: none">
+        
+        <script>
+  Slides[19] = { run: Demos.full_scene_broken };
+</script>
+
+<h2>Моряшка камера</h2>
+
+<div class="viewer full">
+  <canvas>
+  </canvas>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-20" class="slide" data-id="20" style="display: none">
+        
+        <div class="viewer full">
+  <h2>Оглеждане</h2>
+
+  <div class="code">
+    <span class="hl-0">camera.rotation.set(0, 0, 0);</span>
+
+    <span class="hl-1">var pitch = new THREE.Object3D();
+    pitch.add(camera);</span>
+
+    <span class="hl-2">var yaw = new THREE.Object3D();
+    yaw.add(pitch);</span>
+
+    <span class="hl-3">yaw.position.y = height;</span>
+  </div>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-21" class="slide" data-id="21" style="display: none">
+        
+        <div class="viewer full">
+  <h2>Оглеждане</h2>
+
+  <div class="code">
+    var updateCamera = function(movementX, movementY) {
+      <span class="hl-0">yaw.rotation.y   -= movementX * 0.002;</span>
+      <span class="hl-1">pitch.rotation.x -= movementY * 0.002;</span>
+
+      <span class="hl-2">pitch.rotation.x = Math.max(
+        -Math.PI/2,
+        Math.min(Math.PI/2, pitch.rotation.x)
+      );</span>
+    };
+  </div>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-22" class="slide" data-id="22" style="display: none">
+        
+        <script>
+  Slides[22] = { run: Demos.full_scene };
+</script>
+
+<div class="viewer full">
+  <canvas>
+  </canvas>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-23" class="slide" data-id="23" style="display: none">
+        
+        <div class="viewer full">
+  <h2>Движение</h2>
+
+  <div class="code">
+    window.FPSControls = function(camera, el) {
+      <span class="hl-1">var speedCoefficient    = 200;
+      var slowdownCoefficient = 5;</span>
+
+      <span class="hl-2">var velocity = new THREE.Vector3();</span>
+
+      <span class="hl-3">var time     = null;
+      var prevTime = performance.now();</span>
+    };
+  </div>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-24" class="slide" data-id="24" style="display: none">
+        
+        <div class="viewer full">
+  <h2>Движение</h2>
+
+  <div class="code">
+    $(document).on('keydown', function(e) {
+      switch (e.keyCode) {
+        case 87: moveForward  = true; break; // w
+        case 65: moveLeft     = true; break; // a
+        case 83: moveBackward = true; break; // s
+        case 68: moveRight    = true; break; // d
+      }
+    });
+  </div>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-25" class="slide" data-id="25" style="display: none">
+        
+        <div class="viewer full">
+  <h2>Движение</h2>
+
+  <div class="code">
+    $(document).on('keyup', function(e) {
+      switch (e.keyCode) {
+        case 87: moveForward  = false; break; // w
+        case 65: moveLeft     = false; break; // a
+        case 83: moveBackward = false; break; // s
+        case 68: moveRight    = false; break; // d
+      }
+    });
+  </div>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-26" class="slide" data-id="26" style="display: none">
+        
+        <div class="viewer full">
+  <h2>Движение</h2>
+
+  <div class="code">
+    this.update = function() {
+      <span class="hl-0">time = performance.now();
+      var delta = (time - prevTime) / 1000;
+      prevTime = time;</span>
+
+      <span class="hl-1">var c = speedCoefficient;</span>
+
+      <span class="hl-2">if (moveForward)  { velocity.z -= c * delta; }
+      if (moveBackward) { velocity.z += c * delta; }
+
+      if (moveLeft)  { velocity.x -= c * delta; }
+      if (moveRight) { velocity.x += c * delta; }</span>
+    }
+  </div>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-27" class="slide" data-id="27" style="display: none">
+        
+        <div class="viewer full">
+  <h2>Движение</h2>
+
+  <div class="code">
+    var c = slowdownCoefficient;
+
+    velocity.x -= velocity.x * c * delta;
+    velocity.z -= velocity.z * c * delta;
+  </div>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-28" class="slide" data-id="28" style="display: none">
+        
+        <div class="viewer full">
+  <h2>Движение</h2>
+
+  <div class="code">
+    yaw.translateX(velocity.x * delta);
+    yaw.translateZ(velocity.z * delta);
+  </div>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-29" class="slide" data-id="29" style="display: none">
+        
+        <script>
+  Slides[29] = { run: Demos.full_scene };
+</script>
+
+<div class="viewer full">
+  <canvas>
+  </canvas>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-30" class="slide" data-id="30" style="display: none">
+        
+        <div class="viewer full">
+  <h2>Скачане</h2>
+
+  <center><img src="./index_files/thrown_object.png"></center>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-31" class="slide" data-id="31" style="display: none">
+        
+        <div class="viewer full">
+  <h2>Скачане</h2>
+
+  <div class="code">
+    <span class="hl-0">var isOnFloor = function() {
+      return (yaw.position.y &lt;= height);
+    };</span>
+
+    $(document).on('keydown', function(e) {
+      switch (e.keyCode) {
+        <span class="hl-1">case 32: // space
+          if (isOnFloor()) { velocity.y += jumpSpeed; }
+          break;</span>
+      }
+    });
+  </div>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-32" class="slide" data-id="32" style="display: none">
+        
+        <div class="viewer full">
+  <h2>Скачане</h2>
+
+  <div class="code">
+    this.update = function() {
+      <span class="hl-0">var G    = 9.8;
+      var mass = 20;
+      velocity.y -= mass * G * delta;</span>
+
+      yaw.translateX(velocity.x * delta);
+      <span class="hl-1">yaw.translateY(velocity.y * delta);</span>
+      yaw.translateZ(velocity.z * delta);
+
+      <span class="hl-2">if (isOnFloor()) {
+        velocity.y = 0;
+        yaw.position.y = height;
+      }</span>
+    };
+  </div>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-33" class="slide" data-id="33" style="display: none">
+        
+        <script>
+  Slides[33] = { run: Demos.full_scene };
+</script>
+
+<div class="viewer full">
+  <canvas>
+  </canvas>
+</div>
+
+      </div>
+    
+      
+
+      <div id="slide-34" class="slide" data-id="34" style="display: none">
+        
+        <h2>Приложения</h2>
+
+<ul class="bullets">
+  <li class="appear">3d принтиране</li>
+  <li class="appear">Панорами</li>
+  <li class="appear">Тази презентация</li>
+  <li class="appear">Забавление!</li>
+</ul>
+
+      </div>
+    
+      
+
+      <div id="slide-35" class="slide" data-id="35" style="display: none">
+        
+        <h2>Gone Home</h2>
+
+<center><img width="700" src="./index_files/gone_home.jpg"></center>
+
+      </div>
+    
+      
+
+      <div id="slide-36" class="slide" data-id="36" style="display: none">
+        
+        <h2>Mass Effect</h2>
+
+<center><img width="700" src="./index_files/mass_effect.jpg"></center>
+
+      </div>
+    
+      
+
+      <div id="slide-37" class="slide" data-id="37" style="display: none">
+        
+        <h2>A Slower Speed of Light</h2>
+
+<center><img width="700" src="./index_files/speed_of_light.jpg"></center>
+
+      </div>
+    
+      
+
+      <div id="slide-38" class="slide" data-id="38" style="display: none">
+        
+        <h1>Three.js == Fun</h1>
+
+      </div>
+    
+      
+
+      <div id="slide-39" class="slide" data-id="39" style="display: none">
+        
+        <h1>Благодаря</h1>
+
+      </div>
+    
+      
+
+      <div id="slide-40" class="slide" data-id="40" style="display: none">
+        
+        <h1>Въпроси?</h1>
+
+      </div>
+    
+  
+
+</body></html>
